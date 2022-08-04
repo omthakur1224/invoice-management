@@ -53,7 +53,7 @@ router.delete('/invoice/:id', async(req,res)=>{
 router.patch('/invoice/update/:id', async(req,res)=>{
     console.log(req.body,"updatedbody")
     try{
-        const bill= await Invoice.findOneAndUpdate({_id:req.params.id},req.body,{new:true})
+        const bill= await Invoice.findOneAndUpdate({invoice_number:req.params.id},req.body,{new:true})
         // query format findOneAndUpdate({search param},{updation},{new:true,upsert:true})
         if(bill){
             res.status(200).json(bill);
