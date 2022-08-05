@@ -68,4 +68,29 @@ router.patch('/invoice/update/:id', async(req,res)=>{
     
 })
 
+
+//getting data between two dates
+
+router.post('/between',(req, res) => {
+    let {Fromdate,Todate}=req.query
+    var query = {
+        // username: req.body.username,
+        invoice_date: {
+            $gte: new Date(new Date(Fromdate).setHours(00, 00, 00)),
+            $lt: new Date(new Date(Todate).setHours(23, 59, 59))
+        },
+        // leave: { $exists: false }
+    }
+
+    Invoice.find(query).then((err,data)=>{
+
+        if (err) { return res.status(300).json("Error") }
+            else {
+                return res.status(200).json({ data: data })
+            }
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+})
 module.exports=router;
